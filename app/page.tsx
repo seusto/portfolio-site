@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <main className="min-h-screen grid place-items-center bg-gray-50">
       <section className="py-16">
-        <h1 className="underline text-blue-600/75 dark:text-sky-400/75">Integration & Full-Stack Developer </h1>
+        <h1 className="underline text-blue-600/75 dark:text-sky-400/75">Seusto, aggiornamento hero</h1>
       </section>
       <button className="px-4 py-2 rounded-lg border hover:bg-gray-100">
         Ciao Mondo!! 👋
