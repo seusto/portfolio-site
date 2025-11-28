@@ -39,7 +39,6 @@
 }
 
 /* BLOCCHI GEOMETRICI DI SFONDO DENTRO LA CARD */
-.decorTop,
 .decorBottom {
   position: absolute;
   pointer-events: none;
@@ -115,6 +114,7 @@
   outline: none;
   background-color: #fffaf3;
   color: #111111;
+  box-sizing: border-box;
 }
 
 .input::placeholder {
@@ -210,6 +210,12 @@
   letter-spacing: 0.08em;
 }
 
+.receiverWrapper {
+  margin: 0.8rem 0;      /* stesso spazio sopra e sotto */
+  text-align: center;    /* per tenerlo centrato orizzontalmente */
+}
+
+
 /* TEXTAREA NOTE */
 .textarea {
   width: 100%;
@@ -221,6 +227,7 @@
   margin-bottom: 0.7rem;
   background-color: #fffaf3;
   color: #111111;
+  box-sizing: border-box;
 }
 
 .textarea::placeholder {

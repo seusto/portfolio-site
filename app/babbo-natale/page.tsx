@@ -261,16 +261,15 @@ export default async function BabboNatalePage({ searchParams }: PageProps) {
     <main className={styles.page}>
       <div className={styles.cardWrapper}>
         <section className={styles.card}>
-          <div className={styles.decorTop} />
           <div className={styles.decorBottom} />
 
           {/* Header */}
           <div className={styles.headerRow}>
 
             <div>
-              <div className={styles.titleText}>Babbo Natale di famiglia</div>
+              <div className={styles.titleText}>Babbo Natale delle Minchie</div>
               <div className={styles.subtitleText}>
-                Un piccolo gioco tra di noi per scambiarci un pensiero.
+                Mi serviva qualcosa per esercitarmi
               </div>
             </div>
           </div>
@@ -317,10 +316,8 @@ export default async function BabboNatalePage({ searchParams }: PageProps) {
             <div className={styles.sectionSpacing}>
               <div className={styles.headerInfoRow}>
                 <div className={styles.badge}>
-                  🎄 Evento
-                  <span>{view.eventName}</span>
+                <span className={styles.smallMuted}>Codice: {view.code}</span>  
                 </div>
-                <span className={styles.smallMuted}>Codice: {view.code}</span>
               </div>
 
               <p
@@ -334,19 +331,18 @@ export default async function BabboNatalePage({ searchParams }: PageProps) {
               </p>
               <p
                 className={styles.smallMuted}
-                style={{ marginBottom: '0.4rem', fontSize: '0.9rem' }}
+                style={{ marginBottom: '0.8rem', fontSize: '0.9rem' }}
               >
-                Per questo Babbo Natale segreto, il tuo compito è preparare un
+                Per questo Secret Santa, il tuo compito è preparare un
                 pensiero per:
               </p>
-
-              <p style={{ marginBottom: '1.2rem' }}>
+              <div className={styles.receiverWrapper}>
                 <span className={styles.receiverName}>{view.receiverName}</span>
-              </p>
+              </div>
 
               <p
                 className={styles.smallMuted}
-                style={{ marginBottom: '0.7rem', fontSize: '0.9rem' }}
+                style={{ marginTop: 0, marginBottom: '0.8rem', fontSize: '0.9rem' }}
               >
                 Qui puoi segnarti idee, preferenze, budget… quello che ti aiuta
                 a scegliere il regalo giusto. Le note le vedi solo tu.
