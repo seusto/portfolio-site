@@ -8,17 +8,19 @@ const supabase = createClient(
 
 export async function POST(req: Request) {
   try {
-    const { day, notes } = await req.json();
+    const body = (await req.json()) as { day?: string; notes?: string };
+    const day = typeof body.day === "string" ? body.day : "";
     if (!day) return NextResponse.json({ error: "day mancante" }, { status: 400 });
 
     const { error } = await supabase
       .from("daily_values")
-      .update({ notes })
+      .update({ notes: typeof body.notes === "string" ? body.notes : null })
       .eq("day", day);
 
     if (error) throw error;
     return NextResponse.json({ ok: true });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || "Notes update failed" }, { status: 500 });
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : "Notes update failed";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
