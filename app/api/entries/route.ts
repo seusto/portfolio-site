@@ -9,8 +9,8 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 
 export async function GET(req: Request) {
   try {
-    const url = new URL(req.url);
-    const days = Number(url.searchParams.get("days") || 60);
+    const u = new URL(req.url);
+    const days = Number(u.searchParams.get("days") || 60);
     const since = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
 
     const { data, error } = await supabase
@@ -21,35 +21,34 @@ export async function GET(req: Request) {
 
     if (error) throw error;
     return NextResponse.json(data ?? []);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || "GET failed" }, { status: 500 });
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : "GET failed";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json().catch(() => ({}));
-    const _day: string = (body.day || "").trim();
-    const day = _day || todayISO(); // default OGGI
+    const body = await req.json().catch(() => ({} as Record<string, unknown>));
+    const _day = typeof body.day === "string" ? body.day.trim() : "";
+    const day = _day || todayISO();
+
     const raw = String(body.value ?? "").replace(",", ".");
     const value = Number.parseFloat(raw);
-    const notes: string | null = typeof body.notes === "string" ? body.notes : null;
+    const notes = typeof body.notes === "string" ? body.notes : null;
 
     if (!Number.isFinite(value)) {
       return NextResponse.json({ error: "Valore non valido" }, { status: 400 });
     }
 
-    // upsert per giorno: aggiorna value/notes e "measured_at" all'istante
     const { error } = await supabase
       .from("daily_values")
-      .upsert(
-        { day, value, notes, measured_at: new Date().toISOString() },
-        { onConflict: "day" }
-      );
+      .upsert({ day, value, notes, measured_at: new Date().toISOString() }, { onConflict: "day" });
 
     if (error) throw error;
     return NextResponse.json({ ok: true, day, value, notes });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || "POST failed" }, { status: 500 });
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : "POST failed";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
