@@ -1,4 +1,4 @@
-const pdfUrl = 'pdf/interfacce.pdf'; 
+const pdfUrl = 'pdf/inter.pdf'; 
 
 export default function pdfInterfacce() {
     return (
